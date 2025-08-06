@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisan's Grove - Handcrafted Goods</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Playfair Display & Lato -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom styles and animations */
+        :root {
+            --bg-color: #FDFBF8; /* Warm Off-white */
+            --text-color: #433A3F; /* Deep Charcoal */
+            --accent-color: #B95C50; /* Terracotta */
+            --accent-hover: #A04F43; /* Darker Terracotta */
+            --highlight-color: #D4AF37; /* Gold */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Lato', sans-serif;
+        }
+
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .bg-accent { background-color: var(--accent-color); }
+        .hover\:bg-accent-hover:hover { background-color: var(--accent-hover); }
+        .text-accent { color: var(--accent-color); }
+        .border-accent { border-color: var(--accent-color); }
+        .text-highlight { color: var(--highlight-color); }
+
+        /* Hero Image Zoom Animation */
+        .hero-bg {
+            background-image: url('https://placehold.co/1600x900/EAE6E1/433A3F?text=Artisan+Lifestyle');
+            background-size: cover;
+            background-position: center;
+            animation: zoom-in 20s ease-out infinite alternate;
+        }
+        @keyframes zoom-in {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        /* Scroll-triggered slide-in animations */
+        .slide-in {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .slide-in-from-left { transform: translateX(-50px); }
+        .slide-in-from-right { transform: translateX(50px); }
+        .slide-in-from-bottom { transform: translateY(50px); }
+
+        .slide-in.is-visible {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
+
+        /* Product Image Hover Effect */
+        .product-image-container { overflow: hidden; }
+        .product-image-container img {
+            transition: transform 0.5s ease;
+        }
+        .product-image-container:hover img {
+            transform: scale(1.05);
+        }
+        .product-overlay {
+            transition: opacity 0.5s ease;
+        }
+        .product-image-container:hover .product-overlay {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="#" class="text-3xl font-serif font-bold text-text-color" data-key="logo">Artisan's Grove</a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center space-x-8 text-lg">
+                    <a href="#new-arrivals" class="hover:text-accent transition-colors duration-300" data-key="nav_new">New Arrivals</a>
+                    <a href="#categories" class="hover:text-accent transition-colors duration-300" data-key="nav_categories">Categories</a>
+                    <a href="#lookbook" class="hover:text-accent transition-colors duration-300" data-key="nav_lookbook">Lookbook</a>
+                </nav>
+
+                <!-- Header Icons & Language Selector -->
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <select id="language-switcher" class="bg-transparent border border-gray-300 rounded-md py-1 px-2 text-sm focus:outline-none focus:border-accent">
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                            <option value="es">Español</option>
+                        </select>
+                    </div>
+                    <a href="#" class="hover:text-accent transition-colors duration-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </a>
+                    <a href="#" class="hover:text-accent transition-colors duration-300 relative">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                        <span class="absolute -top-2 -right-2 bg-accent text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">2</span>
+                    </a>
+                    <button id="mobile-menu-button" class="lg:hidden text-text-color focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden px-6 pb-4">
+             <a href="#new-arrivals" class="block py-2 hover:text-accent transition-colors duration-300" data-key="nav_new_mobile">New Arrivals</a>
+             <a href="#categories" class="block py-2 hover:text-accent transition-colors duration-300" data-key="nav_categories_mobile">Categories</a>
+             <a href="#lookbook" class="block py-2 hover:text-accent transition-colors duration-300" data-key="nav_lookbook_mobile">Lookbook</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="relative h-[80vh] min-h-[500px] flex items-center justify-center text-white hero-bg">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="relative text-center z-10 p-6 slide-in slide-in-from-bottom">
+                <h1 class="text-5xl md:text-7xl font-extrabold font-serif mb-4" data-key="hero_title">Crafted with Soul</h1>
+                <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8" data-key="hero_subtitle">Discover unique, handcrafted pieces that bring warmth and character to your home.</p>
+                <a href="#new-arrivals" class="bg-accent hover:bg-accent-hover text-white font-bold py-3 px-8 rounded-full text-lg transition-colors duration-300" data-key="hero_button">Shop Collections</a>
+            </div>
+        </section>
+
+        <!-- New Arrivals Section -->
+        <section id="new-arrivals" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 slide-in slide-in-from-bottom">
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold" data-key="new_arrivals_title">New Arrivals</h2>
+                    <p class="text-gray-600 mt-2" data-key="new_arrivals_subtitle">Our latest collection of handcrafted treasures.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Product 1 -->
+                    <div class="text-center slide-in slide-in-from-left">
+                        <div class="relative rounded-lg overflow-hidden shadow-lg product-image-container">
+                            <img src="https://placehold.co/600x750/D6C8BC/433A3F?text=Ceramic+Vase" alt="Handcrafted Ceramic Vase" class="w-full h-auto">
+                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 product-overlay">
+                                <button class="bg-white text-text-color py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition" data-key="quick_view">Quick View</button>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-4" data-key="product1_name">Earthen Ceramic Vase</h3>
+                        <p class="text-lg text-accent mt-1">$75.00</p>
+                    </div>
+                    <!-- Product 2 -->
+                    <div class="text-center slide-in slide-in-from-bottom" style="transition-delay: 150ms;">
+                        <div class="relative rounded-lg overflow-hidden shadow-lg product-image-container">
+                            <img src="https://placehold.co/600x750/A3B1AD/433A3F?text=Linen+Throw" alt="Woven Linen Throw" class="w-full h-auto">
+                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 product-overlay">
+                                <button class="bg-white text-text-color py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition" data-key="quick_view">Quick View</button>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-4" data-key="product2_name">Woven Linen Throw</h3>
+                        <p class="text-lg text-accent mt-1">$120.00</p>
+                    </div>
+                    <!-- Product 3 -->
+                    <div class="text-center slide-in slide-in-from-right" style="transition-delay: 300ms;">
+                        <div class="relative rounded-lg overflow-hidden shadow-lg product-image-container">
+                            <img src="https://placehold.co/600x750/C4A484/433A3F?text=Wooden+Bowl" alt="Carved Wooden Bowl" class="w-full h-auto">
+                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 product-overlay">
+                                <button class="bg-white text-text-color py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition" data-key="quick_view">Quick View</button>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-4" data-key="product3_name">Carved Wooden Bowl</h3>
+                        <p class="text-lg text-accent mt-1">$95.00</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lookbook Section -->
+        <section id="lookbook" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6 flex flex-wrap items-center">
+                <div class="w-full md:w-1/2 p-4 slide-in slide-in-from-left">
+                     <img src="https://placehold.co/800x600/C4A484/FFFFFF?text=Cozy+Interior" alt="Inspirational interior scene" class="rounded-lg shadow-xl w-full">
+                </div>
+                <div class="w-full md:w-1/2 p-4 slide-in slide-in-from-right">
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4" data-key="lookbook_title">Find Your Inspiration</h2>
+                    <p class="text-lg text-gray-700 mb-6" data-key="lookbook_text">Explore our lookbook and see how our pieces can transform your space into a sanctuary of style and comfort. Each item tells a story.</p>
+                    <a href="#" class="border-b-2 border-accent text-accent font-bold text-lg pb-1 hover:text-text-color hover:border-text-color transition" data-key="lookbook_button">Explore The Lookbook</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section id="categories" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 slide-in slide-in-from-bottom">
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold" data-key="categories_title">Shop by Category</h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Category 1 -->
+                    <a href="#" class="relative rounded-lg overflow-hidden h-64 flex items-end p-6 text-white shadow-lg slide-in slide-in-from-bottom">
+                        <img src="https://placehold.co/400x400/D6C8BC/FFFFFF?text=Ceramics" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Ceramics">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <h3 class="relative text-2xl font-bold font-serif" data-key="cat1">Ceramics</h3>
+                    </a>
+                    <!-- Category 2 -->
+                    <a href="#" class="relative rounded-lg overflow-hidden h-64 flex items-end p-6 text-white shadow-lg slide-in slide-in-from-bottom" style="transition-delay: 100ms;">
+                        <img src="https://placehold.co/400x400/A3B1AD/FFFFFF?text=Textiles" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Textiles">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <h3 class="relative text-2xl font-bold font-serif" data-key="cat2">Textiles</h3>
+                    </a>
+                    <!-- Category 3 -->
+                    <a href="#" class="relative rounded-lg overflow-hidden h-64 flex items-end p-6 text-white shadow-lg slide-in slide-in-from-bottom" style="transition-delay: 200ms;">
+                        <img src="https://placehold.co/400x400/C4A484/FFFFFF?text=Woodwork" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Woodwork">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <h3 class="relative text-2xl font-bold font-serif" data-key="cat3">Woodwork</h3>
+                    </a>
+                    <!-- Category 4 -->
+                    <a href="#" class="relative rounded-lg overflow-hidden h-64 flex items-end p-6 text-white shadow-lg slide-in slide-in-from-bottom" style="transition-delay: 300ms;">
+                        <img src="https://placehold.co/400x400/EAE6E1/433A3F?text=Decor" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110" alt="Decor">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <h3 class="relative text-2xl font-bold font-serif" data-key="cat4">Decor</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-800 text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-serif mb-3" data-key="newsletter_title">Join Our Community</h3>
+                <p class="text-stone-400 mb-6" data-key="newsletter_subtitle">Get exclusive offers and a first look at our new collections.</p>
+                <form class="max-w-md mx-auto flex">
+                    <input type="email" placeholder="Your email address" class="w-full bg-stone-700 text-white px-4 py-3 rounded-l-full focus:outline-none" data-key="newsletter_placeholder">
+                    <button type="submit" class="bg-accent hover:bg-accent-hover text-white font-bold px-6 py-3 rounded-r-full transition-colors" data-key="newsletter_button">Subscribe</button>
+                </form>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center md:text-left">
+                <div>
+                    <h5 class="font-bold uppercase text-stone-300 mb-4" data-key="footer_shop">Shop</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-accent transition-colors duration-300 text-stone-400" data-key="footer_shop_all">All Products</a></li>
+                        <li><a href="#" class="hover:text-accent transition-colors duration-300 text-stone-400" data-key="footer_shop_new">New Arrivals</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold uppercase text-stone-300 mb-4" data-key="footer_about">About</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-accent transition-colors duration-300 text-stone-400" data-key="footer_about_story">Our Story</a></li>
+                        <li><a href="#" class="hover:text-accent transition-colors duration-300 text-stone-400" data-key="footer_about_journal">Journal</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold uppercase text-stone-300 mb-4" data-key="footer_help">Help</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-accent transition-colors duration-300 text-stone-400" data-key="footer_help_contact">Contact</a></li>
+                        <li><a href="#" class="hover:text-accent transition-colors duration-300 text-stone-400" data-key="footer_help_faq">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold uppercase text-stone-300 mb-4" data-key="footer_follow">Follow</h5>
+                    <div class="flex space-x-4 justify-center md:justify-start">
+                        <a href="#" class="text-stone-400 hover:text-accent transition-colors duration-300">Instagram</a>
+                        <a href="#" class="text-stone-400 hover:text-accent transition-colors duration-300">Pinterest</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-stone-700 mt-12 pt-6 text-center text-stone-500 text-sm">
+                <p>&copy; 2024 Artisan's Grove. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- Language Translation Simulation ---
+            const translations = {
+                en: {
+                    logo: "Artisan's Grove",
+                    nav_new: "New Arrivals",
+                    nav_categories: "Categories",
+                    nav_lookbook: "Lookbook",
+                    nav_new_mobile: "New Arrivals",
+                    nav_categories_mobile: "Categories",
+                    nav_lookbook_mobile: "Lookbook",
+                    hero_title: "Crafted with Soul",
+                    hero_subtitle: "Discover unique, handcrafted pieces that bring warmth and character to your home.",
+                    hero_button: "Shop Collections",
+                    new_arrivals_title: "New Arrivals",
+                    new_arrivals_subtitle: "Our latest collection of handcrafted treasures.",
+                    quick_view: "Quick View",
+                    product1_name: "Earthen Ceramic Vase",
+                    product2_name: "Woven Linen Throw",
+                    product3_name: "Carved Wooden Bowl",
+                    lookbook_title: "Find Your Inspiration",
+                    lookbook_text: "Explore our lookbook and see how our pieces can transform your space into a sanctuary of style and comfort. Each item tells a story.",
+                    lookbook_button: "Explore The Lookbook",
+                    categories_title: "Shop by Category",
+                    cat1: "Ceramics",
+                    cat2: "Textiles",
+                    cat3: "Woodwork",
+                    cat4: "Decor",
+                    newsletter_title: "Join Our Community",
+                    newsletter_subtitle: "Get exclusive offers and a first look at our new collections.",
+                    newsletter_placeholder: "Your email address",
+                    newsletter_button: "Subscribe",
+                    footer_shop: "Shop",
+                    footer_shop_all: "All Products",
+                    footer_shop_new: "New Arrivals",
+                    footer_about: "About",
+                    footer_about_story: "Our Story",
+                    footer_about_journal: "Journal",
+                    footer_help: "Help",
+                    footer_help_contact: "Contact",
+                    footer_help_faq: "FAQs",
+                    footer_follow: "Follow",
+                },
+                fr: {
+                    logo: "Le Bosquet de l'Artisan",
+                    nav_new: "Nouveautés",
+                    nav_categories: "Catégories",
+                    nav_lookbook: "Lookbook",
+                    nav_new_mobile: "Nouveautés",
+                    nav_categories_mobile: "Catégories",
+                    nav_lookbook_mobile: "Lookbook",
+                    hero_title: "Fabriqué avec l'Âme",
+                    hero_subtitle: "Découvrez des pièces uniques, faites à la main, qui apportent chaleur et caractère à votre intérieur.",
+                    hero_button: "Voir les Collections",
+                    new_arrivals_title: "Nouveautés",
+                    new_arrivals_subtitle: "Notre dernière collection de trésors artisanaux.",
+                    quick_view: "Aperçu Rapide",
+                    product1_name: "Vase en Céramique de Terre",
+                    product2_name: "Jeté en Lin Tissé",
+                    product3_name: "Bol en Bois Sculpté",
+                    lookbook_title: "Trouvez Votre Inspiration",
+                    lookbook_text: "Explorez notre lookbook et voyez comment nos pièces peuvent transformer votre espace en un sanctuaire de style et de confort.",
+                    lookbook_button: "Explorer le Lookbook",
+                    categories_title: "Acheter par Catégorie",
+                    cat1: "Céramiques",
+                    cat2: "Textiles",
+                    cat3: "Boiseries",
+                    cat4: "Décor",
+                    newsletter_title: "Rejoignez Notre Communauté",
+                    newsletter_subtitle: "Recevez des offres exclusives et un premier aperçu de nos nouvelles collections.",
+                    newsletter_placeholder: "Votre adresse e-mail",
+                    newsletter_button: "S'abonner",
+                    footer_shop: "Boutique",
+                    footer_shop_all: "Tous les produits",
+                    footer_shop_new: "Nouveautés",
+                    footer_about: "À propos",
+                    footer_about_story: "Notre histoire",
+                    footer_about_journal: "Journal",
+                    footer_help: "Aide",
+                    footer_help_contact: "Contact",
+                    footer_help_faq: "FAQs",
+                    footer_follow: "Suivez",
+                },
+                es: {
+                    logo: "Arboleda del Artesano",
+                    nav_new: "Novedades",
+                    nav_categories: "Categorías",
+                    nav_lookbook: "Lookbook",
+                    nav_new_mobile: "Novedades",
+                    nav_categories_mobile: "Categorías",
+                    nav_lookbook_mobile: "Lookbook",
+                    hero_title: "Hecho con Alma",
+                    hero_subtitle: "Descubre piezas únicas, hechas a mano, que aportan calidez y carácter a tu hogar.",
+                    hero_button: "Ver Colecciones",
+                    new_arrivals_title: "Novedades",
+                    new_arrivals_subtitle: "Nuestra última colección de tesoros artesanales.",
+                    quick_view: "Vista Rápida",
+                    product1_name: "Jarrón de Cerámica de Tierra",
+                    product2_name: "Manta de Lino Tejido",
+                    product3_name: "Cuenco de Madera Tallada",
+                    lookbook_title: "Encuentra Tu Inspiración",
+                    lookbook_text: "Explora nuestro lookbook y ve cómo nuestras piezas pueden transformar tu espacio en un santuario de estilo y comodidad.",
+                    lookbook_button: "Explorar el Lookbook",
+                    categories_title: "Comprar por Categoría",
+                    cat1: "Cerámica",
+                    cat2: "Textiles",
+                    cat3: "Madera",
+                    cat4: "Decoración",
+                    newsletter_title: "Únete a Nuestra Comunidad",
+                    newsletter_subtitle: "Recibe ofertas exclusivas y un primer vistazo a nuestras nuevas colecciones.",
+                    newsletter_placeholder: "Tu dirección de correo",
+                    newsletter_button: "Suscribir",
+                    footer_shop: "Tienda",
+                    footer_shop_all: "Todos los productos",
+                    footer_shop_new: "Novedades",
+                    footer_about: "Sobre",
+                    footer_about_story: "Nuestra historia",
+                    footer_about_journal: "Diario",
+                    footer_help: "Ayuda",
+                    footer_help_contact: "Contacto",
+                    footer_help_faq: "FAQs",
+                    footer_follow: "Sigue",
+                }
+            };
+
+            const languageSwitcher = document.getElementById('language-switcher');
+            languageSwitcher.addEventListener('change', (event) => {
+                const selectedLang = event.target.value;
+                translatePage(selectedLang);
+            });
+
+            function translatePage(lang) {
+                document.querySelectorAll('[data-key]').forEach(element => {
+                    const key = element.getAttribute('data-key');
+                    if (translations[lang] && translations[lang][key]) {
+                        if (element.hasAttribute('placeholder')) {
+                             element.setAttribute('placeholder', translations[lang][key]);
+                        } else {
+                             element.textContent = translations[lang][key];
+                        }
+                    }
+                });
+            }
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // --- Scroll-triggered Animations ---
+            const sections = document.querySelectorAll('.slide-in');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
+</body>
+</html>

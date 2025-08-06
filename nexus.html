@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Global - Corporate Solutions</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom styles and animations */
+        :root {
+            --primary-dark: #0d1b2a; /* Deep Navy */
+            --primary-light: #1b263b; /* Lighter Navy */
+            --accent-gold: #D4AF37; /* Metallic Gold */
+            --accent-gold-hover: #C39B29; /* Darker Gold */
+            --text-light: #E0E1DD; /* Off-white */
+            --text-dark: #0d1b2a;
+        }
+
+        body {
+            background-color: #F8F9FA;
+            color: var(--text-dark);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .bg-primary-dark { background-color: var(--primary-dark); }
+        .bg-primary-light { background-color: var(--primary-light); }
+        .text-accent-gold { color: var(--accent-gold); }
+        .border-accent-gold { border-color: var(--accent-gold); }
+        .bg-accent-gold { background-color: var(--accent-gold); }
+        .hover\:bg-accent-gold-hover:hover { background-color: var(--accent-gold-hover); }
+
+        /* Animated SVG Line */
+        .animated-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw-line 3s ease-out forwards;
+        }
+        @keyframes draw-line {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Subtle geometric background pattern */
+        .pattern-bg {
+            background-color: var(--primary-dark);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%231b263b' fill-opacity='0.4' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.99 7.5V30L0 22.5zM28 15v7.5L15 30V22.5z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Counter Animation */
+        .counter-value {
+            transition: all 1s ease-out;
+        }
+
+        /* Service Card Hover Effect */
+        .service-card {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .service-card .overlay {
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .service-card:hover .overlay {
+            transform: translateY(0);
+        }
+
+        /* Scroll-triggered Fade-in Animation */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-md">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-3xl font-extrabold text-primary-dark">Nexus<span class="text-accent-gold">.</span></a>
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a href="#about" class="hover:text-accent-gold transition-colors duration-300">About Us</a>
+                <a href="#services" class="hover:text-accent-gold transition-colors duration-300">Services</a>
+                <a href="#insights" class="hover:text-accent-gold transition-colors duration-300">Insights</a>
+            </div>
+            <a href="#contact" class="hidden md:block bg-primary-dark hover:bg-black text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-300">
+                Get in Touch
+            </a>
+            <button id="mobile-menu-button" class="md:hidden text-primary-dark focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#about" class="block py-2 hover:text-accent-gold transition-colors duration-300">About Us</a>
+            <a href="#services" class="block py-2 hover:text-accent-gold transition-colors duration-300">Services</a>
+            <a href="#insights" class="block py-2 hover:text-accent-gold transition-colors duration-300">Insights</a>
+            <a href="#contact" class="block mt-2 bg-primary-dark hover:bg-black text-white font-semibold px-5 py-2 rounded-lg transition-colors duration-300 text-center">Get in Touch</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="pattern-bg text-white">
+            <div class="container mx-auto px-6 py-20 md:py-32 grid md:grid-cols-2 items-center gap-12">
+                <div class="fade-in-up">
+                    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">Navigating Complexity. Delivering&nbsp;Results.</h1>
+                    <p class="text-lg md:text-xl text-text-light mb-8">We provide strategic financial consulting to help your business thrive in a rapidly changing global market.</p>
+                    <a href="#services" class="bg-accent-gold hover:bg-accent-gold-hover text-primary-dark font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-300 inline-block">
+                        Explore Our Services
+                    </a>
+                </div>
+                <div class="fade-in-up" style="transition-delay: 200ms;">
+                    <!-- Animated SVG Graph -->
+                    <svg viewBox="0 0 100 50" class="w-full h-auto">
+                        <path d="M 5 45 L 20 30 L 35 40 L 50 20 L 65 25 L 80 10 L 95 15" fill="none" stroke="#E0E1DD" stroke-width="1" stroke-dasharray="2 2"/>
+                        <path class="animated-line" d="M 5 45 L 20 30 L 35 40 L 50 20 L 65 25 L 80 10 L 95 15" fill="none" stroke="var(--accent-gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Counter Section -->
+        <section id="stats" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="fade-in-up">
+                        <p class="text-5xl font-extrabold text-accent-gold counter-value" data-target="25">0</p>
+                        <p class="text-lg font-semibold text-primary-dark mt-2">Years of Experience</p>
+                    </div>
+                    <div class="fade-in-up" style="transition-delay: 100ms;">
+                        <p class="text-5xl font-extrabold text-accent-gold counter-value" data-target="500">0</p>
+                        <p class="text-lg font-semibold text-primary-dark mt-2">Successful Projects</p>
+                    </div>
+                    <div class="fade-in-up" style="transition-delay: 200ms;">
+                        <p class="text-5xl font-extrabold text-accent-gold counter-value" data-target="98">0</p>
+                        <p class="text-lg font-semibold text-primary-dark mt-2">% Client Satisfaction</p>
+                    </div>
+                    <div class="fade-in-up" style="transition-delay: 300ms;">
+                        <p class="text-5xl font-extrabold text-accent-gold counter-value" data-target="15">0</p>
+                        <p class="text-lg font-semibold text-primary-dark mt-2">Countries Served</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-primary-dark">Our Core Services</h2>
+                    <p class="text-gray-600 mt-2 max-w-2xl mx-auto">We offer a comprehensive suite of services designed to address your most critical business challenges.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service Card 1 -->
+                    <div class="service-card relative rounded-xl overflow-hidden bg-primary-light text-white p-8 fade-in-up">
+                        <h3 class="text-2xl font-bold mb-4">Mergers & Acquisitions</h3>
+                        <p class="text-text-light">Expert guidance through every stage of the M&A process, from valuation to integration.</p>
+                        <div class="absolute inset-0 bg-black/50 p-8 flex flex-col justify-center overlay">
+                             <h3 class="text-2xl font-bold mb-4 text-accent-gold">Mergers & Acquisitions</h3>
+                             <p class="text-text-light">Maximize value and minimize risk with our strategic advisory. We ensure seamless transactions that align with your long-term goals.</p>
+                        </div>
+                    </div>
+                    <!-- Service Card 2 -->
+                    <div class="service-card relative rounded-xl overflow-hidden bg-primary-light text-white p-8 fade-in-up" style="transition-delay: 150ms;">
+                        <h3 class="text-2xl font-bold mb-4">Capital Strategy</h3>
+                        <p class="text-text-light">Optimizing your capital structure to fuel growth, manage risk, and enhance shareholder value.</p>
+                         <div class="absolute inset-0 bg-black/50 p-8 flex flex-col justify-center overlay">
+                             <h3 class="text-2xl font-bold mb-4 text-accent-gold">Capital Strategy</h3>
+                             <p class="text-text-light">From raising capital to strategic deployment, we help you make the financial decisions that will define your future success.</p>
+                        </div>
+                    </div>
+                    <!-- Service Card 3 -->
+                    <div class="service-card relative rounded-xl overflow-hidden bg-primary-light text-white p-8 fade-in-up" style="transition-delay: 300ms;">
+                        <h3 class="text-2xl font-bold mb-4">Risk Management</h3>
+                        <p class="text-text-light">Identifying and mitigating financial and operational risks to protect your assets and ensure stability.</p>
+                         <div class="absolute inset-0 bg-black/50 p-8 flex flex-col justify-center overlay">
+                             <h3 class="text-2xl font-bold mb-4 text-accent-gold">Risk Management</h3>
+                             <p class="text-text-light">Our proactive approach to risk management turns uncertainty into opportunity, safeguarding your business for the long term.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6 grid md:grid-cols-2 items-center gap-12">
+                <div class="fade-in-up">
+                    <img src="https://placehold.co/800x600/0d1b2a/E0E1DD?text=Our+Team" alt="Nexus Global Team" class="rounded-lg shadow-xl w-full">
+                </div>
+                <div class="fade-in-up" style="transition-delay: 200ms;">
+                    <h2 class="text-3xl md:text-4xl font-bold text-primary-dark mb-4">Your Trusted Partner in Growth</h2>
+                    <p class="text-gray-700 mb-4">Nexus Global was founded on the principle of partnership. We believe in building long-term relationships with our clients, providing not just advice, but a vested interest in your success. Our team of seasoned experts brings decades of cross-industry experience to the table.</p>
+                    <p class="text-gray-700 mb-6">We combine deep market insights with rigorous analytical frameworks to deliver strategies that are not only innovative but also actionable and sustainable.</p>
+                    <a href="#contact" class="border-b-2 border-accent-gold text-primary-dark font-bold pb-1 hover:text-accent-gold transition">Meet Our Leadership</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-primary-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <!-- About -->
+                <div class="md:col-span-1">
+                    <h4 class="text-2xl font-extrabold mb-4">Nexus<span class="text-accent-gold">.</span></h4>
+                    <p class="text-text-light max-w-md">Your partner in strategic financial consulting and global market navigation.</p>
+                </div>
+                <!-- Contact Info -->
+                <div>
+                    <h5 class="font-semibold uppercase text-gray-400 mb-4">Contact Us</h5>
+                    <ul class="space-y-2 text-text-light">
+                        <li><a href="mailto:contact@nexusglobal.com" class="hover:text-accent-gold">contact@nexusglobal.com</a></li>
+                        <li><a href="tel:+1234567890" class="hover:text-accent-gold">+1 (234) 567-890</a></li>
+                        <li>123 Finance Avenue, New York, USA</li>
+                    </ul>
+                </div>
+                <!-- Quick Links -->
+                <div>
+                    <h5 class="font-semibold uppercase text-gray-400 mb-4">Quick Links</h5>
+                    <ul class="space-y-2 text-text-light">
+                        <li><a href="#" class="hover:text-accent-gold">Careers</a></li>
+                        <li><a href="#" class="hover:text-accent-gold">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-accent-gold">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-primary-light mt-8 pt-6 text-center text-gray-500 text-sm">
+                <p>&copy; 2024 Nexus Global. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // --- Intersection Observer for animations ---
+            const animatedElements = document.querySelectorAll('.fade-in-up, .counter-value');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.classList.contains('fade-in-up')) {
+                            entry.target.classList.add('is-visible');
+                        }
+                        if (entry.target.classList.contains('counter-value')) {
+                            animateCounter(entry.target);
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // --- Counter Animation Function ---
+            function animateCounter(element) {
+                const target = +element.getAttribute('data-target');
+                const duration = 2000; // 2 seconds
+                const stepTime = 20; // update every 20ms
+                const totalSteps = duration / stepTime;
+                const increment = target / totalSteps;
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        element.innerText = Math.floor(target);
+                        clearInterval(timer);
+                    } else {
+                        element.innerText = Math.floor(current);
+                    }
+                }, stepTime);
+            }
+        });
+    </script>
+
+</body>
+</html>
