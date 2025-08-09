@@ -1,8 +1,8 @@
-Web Design Showcase: 4 Professional Templates
-This repository contains a collection of four distinct, professionally designed website templates. Each template is built with modern HTML5, styled with Tailwind CSS, and features unique animations and psychological color schemes tailored for different business purposes.
+Web Design Showcase: 5 Professional Templates
+This repository contains a collection of five distinct, professionally designed website templates. Each template is built with modern HTML5, styled with Tailwind CSS, and features unique animations and psychological color schemes tailored for different business purposes.
 
 🚀 The Templates
-Below is an overview of the four templates included in this showcase.
+Below is an overview of the five templates included in this showcase.
 
 1. Modern Tech Startup
 
@@ -27,6 +27,12 @@ File: nexus.html
 A high-end, immersive 3D scene that demonstrates advanced web animation capabilities. This is not a traditional website but an interactive experience where the user's cursor becomes a light source, illuminating a field of floating, metallic crystals in a dark, elegant space.
 
 File: Interactive3DCrystalField.html
+
+5. Luxury Booking Website
+
+A high-end, standalone booking website for a luxury travel brand. It features a sophisticated dark theme with gold accents, a parallax hero image, and interactive 3D "glassmorphism" buttons that react to the user's cursor position for a premium, engaging user experience.
+
+File: ZenithEscapes.html
 
 🛠️ How to Use
 Download: Clone or download the repository to your local machine.
